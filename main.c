@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
+#include <stdlib.h>
+#include <locale.h>
 
 void painel();
 void boasVindas();
@@ -8,11 +10,42 @@ int menuInicial();
 
 int main(){
 
+    int opcaoInicial = 0;
+    int opcaoTema = 0;
     
     printf("\n\n\n");
     painel();
     printf("\n\n\n");
     boasVindas();
+
+    do{
+        opcaoInicial = menuInicial();
+        if(opcaoInicial == 1){
+
+            opcaoTema = menuTema();
+
+            if(opcaoTema == 1){
+
+            }else if(opcaoTema == 2){
+
+            }else if(opcaoTema == 3){
+
+            }else{
+                // opção não existe
+            }
+
+        }else if(opcaoInicial == 2){
+            printf("\nESCREVER O TUTORIAL\n");
+        }else if(opcaoInicial == 3){
+            printf("\nESCREVER O SOBRE\n");
+        }else if(opcaoInicial == 4){
+
+        }else{
+            // opção não existe
+        }
+    }while(opcaoInicial != 4);
+
+
 
     printf("\033[0;31m");
     printf("\n\n\n");
@@ -24,28 +57,43 @@ void painel(){
 
     printf("\033[0;32m");
     printf("          ||||||||||||||||       ||||||||||||||||    |||||||||||            |||||||        |||||||          ||||||||\n");   
+    Sleep(100);
     printf("          ||||||||||||||||       ||||||||||||||||    |||||||||||||||        |||||||||    |||||||||        ||||   ||||\n");
+    Sleep(100);
     printf("               ||||||            |||||               |||||       |||||      ||||| ||||  |||| |||||      ||||       ||||\n");
+    Sleep(100);
     printf("               ||||||            |||||               |||||       |||||      |||||   ||||||   |||||    ||||           ||||\n");
+    Sleep(100);
     printf("               ||||||            ||||||||||||||||    |||||     |||||        |||||    ||||    |||||  ||||               ||||\n");
+    Sleep(100);
     printf("               ||||||            ||||||||||||||||    |||||   ||||||         |||||     ||     |||||  ||||               ||||\n");
+    Sleep(100);
     printf("               ||||||            |||||               |||||||||||            |||||            |||||    ||||           ||||\n");
+    Sleep(100);
     printf("               ||||||            |||||               ||||||||||             |||||            |||||      ||||       ||||\n");
+    Sleep(100);
     printf("               ||||||            ||||||||||||||||    |||||  |||||           |||||            |||||        ||||   ||||\n");
+    Sleep(100);
     printf("               ||||||            ||||||||||||||||    |||||    |||||         |||||            |||||          |||||||");
-
+    Sleep(100);
 }
 
 void boasVindas(){
 
     printf("     |||||||     ||||||||   |||||    |||||             |||          |||     ||||     ||||||      |||    ||||||              |||         \n");
+    Sleep(100);
     printf("     |||   |||   ||||||||   ||||||  ||||||              |||        |||               |||||||     |||    |||  |||          ||| |||       \n");
+    Sleep(100);
     printf("     |||  |||    |||        |||  ||||  |||               |||      |||       ||||     ||| ||||    |||    |||    |||      |||     |||     \n");
+    Sleep(100);
     printf("     ||||||      ||||||||   |||   ||   |||                |||    |||        ||||     |||   |||   |||    |||     |||   |||         |||   \n");
+    Sleep(100);
     printf("     |||  |||    |||        |||        |||                 |||  |||         ||||     |||    |||  |||    |||    |||      |||     |||     \n");
+    Sleep(100);
     printf("     |||   |||   ||||||||   |||        |||                  ||||||          ||||     |||     |||||||    |||  |||          ||| |||       \n");
+    Sleep(100);
     printf("     |||||||     ||||||||   |||        |||                   |||            ||||     |||      ||||||    ||||||              |||         \n");
-
+    Sleep(100);
 }
 
 void coracoesVidas(int vidasRestantes){
@@ -118,11 +166,12 @@ int menuInicial(){
 
     int opcaoInicial = 0;
 
-    printf("------------------------------------------------------------- MENU TERMO ------------------------------------------------------------\n\n");
-    printf("                                                   ESSAS SÂO AS OPÇÕES DISPONIVEIS:\n");
+    printf("\n\n------------------------------------------------------------- MENU TERMO ------------------------------------------------------------\n\n");
+    printf("                                                   ESSAS SÃO AS OPÇÕES DISPONIVEIS:\n");
     printf("                                                              1- JOGAR\n");
     printf("                                                              2- TUTORIAL\n");
     printf("                                                              3- SOBRE\n");
+    printf("                                                              4- SAIR\n");
     printf("                                                    DIGITE O NÚMERO DA OPÇÃO DESEJADA: ");
     scanf("%d", &opcaoInicial);
 
