@@ -3,10 +3,17 @@
 #include <stdlib.h>
 #include <locale.h>
 
+#define TAMANHO_PALAVRAS 8
+#define MAXIMO_PALAVRAS 100
+int totalPalavras = 0;
+char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];
+
 void painel();
 void boasVindas();
 void coracoesVidas(int vidasRestantes);
 int menuInicial();
+int menuTema();
+void carregarPalavras(const char nomeArquivo);
 
 int main(){
 
@@ -25,9 +32,9 @@ int main(){
             opcaoTema = menuTema();
 
             if(opcaoTema == 1){
-
+                carregarPalavras("temas/animais.txt");
             }else if(opcaoTema == 2){
-
+                carregarPalavras("temas/musicas.txt");
             }else if(opcaoTema == 3){
 
             }else{
@@ -44,8 +51,6 @@ int main(){
             // opção não existe
         }
     }while(opcaoInicial != 4);
-
-
 
     printf("\033[0;31m");
     printf("\n\n\n");
@@ -184,10 +189,37 @@ int menuTema(){
 
     printf("------------------------------------------------------------ MENU DE TEMAS ------------------------------------------------------------\n\n");
     printf("                                                  DIGITE O NÚMERO DA OPÇÃO DESEJADA:\n");
-    printf("                                                           1- TEMA 1 (NOME)\n");
-    printf("                                                           2- TEMA 2 (NOME)\n");
+    printf("                                                           1- TEMA ANIMAIS\n");
+    printf("                                                           2- TEMA MÚSICAS\n");
     printf("                                                           3- TEMA 3 (NOME)\n");
+    printf("                                                    DIGITE O NÚMERO DA OPÇÃO DESEJADA: ");
     scanf("%d", &opcaoTema);
 
     return opcaoTema;
+}
+
+void carregarPalavras(const char nomeArquivo) {
+    FILE *arquivo;
+    arquivo = fopen(nomeArquivo, "r");
+    
+    if (arquivo == NULL) {
+        printf("\nErro: Arquivo '%s' não encontrado!\n", nomeArquivo);
+        return;
+    }
+    
+    char linha[TAMANHO_PALAVRAS];
+    totalPalavras = 0;
+    
+    while (fgets(linha, sizeof(linha), arquivo) != NULL && totalPalavras < MAXIMO_PALAVRAS) {
+
+        linha[strcspn(linha, "\n")] = 0;
+        
+        strcpy(palavras[totalPalavras], linha);
+        totalPalavras++;
+    }
+    
+    fclose(arquivo);
+    
+    Sleep(1000);
+
 }
