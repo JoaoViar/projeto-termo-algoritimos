@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h> 
+#include <time.h>
 
 #define TAMANHO_PALAVRAS 8
 #define MAXIMO_PALAVRAS 100
@@ -16,7 +17,7 @@ void boasVindas();
 void coracoesVidas(int vidasRestantes);
 int menuInicial();
 int menuTema();
-void carregarPalavras(const char nomeArquivo);
+int carregarPalavras(const char* nomeArquivo);
 int jogar(char palavrasJogar[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]);
 
 int main(){
@@ -37,6 +38,7 @@ int main(){
 
             if(opcaoTema == 1){
                 carregarPalavras("temas/animais.txt");
+                jogar(palavras);
             }else if(opcaoTema == 2){
                 carregarPalavras("temas/musicas.txt");
             }else if(opcaoTema == 3){
@@ -201,32 +203,47 @@ int menuTema(){
     return opcaoTema;
 }
 
-void carregarPalavras(const char nomeArquivo) {
-    FILE *arquivo;
-    arquivo = fopen(nomeArquivo, "r");
+int carregarPalavras(const char* nomeArquivo) {
+
+    FILE *arquivo = fopen("temas/animais.txt", "r");
     
     if (arquivo == NULL) {
-        printf("\nErro: Arquivo '%s' não encontrado!\n", nomeArquivo);
-        return;
+        printf("Erro: Arquivo não encontrado!\n");
+        return 0;
+    }else{
+        printf("Sucesso");
     }
     
     char linha[TAMANHO_PALAVRAS];
     totalPalavras = 0;
+    contador = 0;
     
     while (fgets(linha, sizeof(linha), arquivo) != NULL && totalPalavras < MAXIMO_PALAVRAS) {
-
+       
         linha[strcspn(linha, "\n")] = 0;
-        
+     
         strcpy(palavras[totalPalavras], linha);
         totalPalavras++;
         contador++;
     }
-    
+     
     fclose(arquivo);
+     
+    return 1;
 }
 
-void jogar(char *palavrasTemaAtual[]){
-
+int jogar(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
+    
+    srand(time(NULL));
+    int indiceSorteado = rand() % contador;
+    
+    char palavraSorteada[TAMANHO_PALAVRAS];
+    strcpy(palavraSorteada, palavrasTemaAtual[indiceSorteado]);
+    
+    printf("Palavra sorteada: %s\n", palavraSorteada);
+    
+    
+    return 0;
 }
 
 /*=======
@@ -502,12 +519,12 @@ void jogarTermo(int tema){
 
 void printLetter(char c){ //se precisar usar coloquei todas as letras
     case 'A':
-        printf("  ██  \n");
-        printf(" █  █ \n");
-        printf("█████ \n");
-        printf("█   █ \n");
-        printf("█   █ \n");
-        printf("█   █ \n");
+        printf("  |||  \n");
+        printf(" || || \n");
+        printf("|||||||\n");
+        printf("||   ||\n");
+        printf("||   ||\n");
+        printf("||   ||\n");
         printf("      \n");
         break;
 
