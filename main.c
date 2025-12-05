@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <stdio.h>
 #include <windows.h>
 #include <stdlib.h>
@@ -9,6 +8,8 @@
 #define MAXIMO_PALAVRAS 100
 int totalPalavras = 0;
 char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];
+int vidasRestantes = 6;
+int contador = 0;
 
 void painel();
 void boasVindas();
@@ -16,6 +17,7 @@ void coracoesVidas(int vidasRestantes);
 int menuInicial();
 int menuTema();
 void carregarPalavras(const char nomeArquivo);
+int jogar(char palavrasJogar[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]);
 
 int main(){
 
@@ -38,7 +40,7 @@ int main(){
             }else if(opcaoTema == 2){
                 carregarPalavras("temas/musicas.txt");
             }else if(opcaoTema == 3){
-
+                
             }else{
                 // opção não existe
             }
@@ -108,7 +110,6 @@ void coracoesVidas(int vidasRestantes){
     switch (vidasRestantes)
     {
     case 0:
-        
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||\n");
         printf("              ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||\n");
@@ -218,14 +219,17 @@ void carregarPalavras(const char nomeArquivo) {
         
         strcpy(palavras[totalPalavras], linha);
         totalPalavras++;
+        contador++;
     }
     
     fclose(arquivo);
-    
-    Sleep(1000);
+}
+
+void jogar(char *palavrasTemaAtual[]){
 
 }
-=======
+
+/*=======
 #include <stdio.h>
 #include <windows.h>
 #include <stdlib.h>
@@ -770,5 +774,5 @@ void limparTela() { }
 void exibirTentativa() { }
 void normalizar() { ); }
 int match() {  }
-
 >>>>>>> 16152120e5de26c1cfcdc68422848613f1184221
+*/
