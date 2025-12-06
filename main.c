@@ -4,13 +4,15 @@
 #include <locale.h>
 #include <string.h> 
 #include <time.h>
+#include <ctype.h>
 
-#define TAMANHO_PALAVRAS 8
+#define TAMANHO_PALAVRAS 7
 #define MAXIMO_PALAVRAS 100
 int totalPalavras = 0;
 char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];
 int vidasRestantes = 6;
 int contador = 0;
+int vitoria = 0;
 
 void painel();
 void boasVindas();
@@ -18,9 +20,13 @@ void coracoesVidas(int vidasRestantes);
 int menuInicial();
 int menuTema();
 int carregarPalavras(const char* nomeArquivo);
-int jogar(char palavrasJogar[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]);
+int sorteio(char palavrasJogar[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]);
+int jogar();
 
 int main(){
+
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+    system("chcp 65001 > nul");
 
     int opcaoInicial = 0;
     int opcaoTema = 0;
@@ -38,7 +44,8 @@ int main(){
 
             if(opcaoTema == 1){
                 carregarPalavras("temas/animais.txt");
-                jogar(palavras);
+                sorteio(palavras);
+                jogar();
             }else if(opcaoTema == 2){
                 carregarPalavras("temas/musicas.txt");
             }else if(opcaoTema == 3){
@@ -213,7 +220,7 @@ int carregarPalavras(const char* nomeArquivo) {
     }else{
         printf("Sucesso");
     }
-    
+
     char linha[TAMANHO_PALAVRAS];
     totalPalavras = 0;
     contador = 0;
@@ -226,14 +233,14 @@ int carregarPalavras(const char* nomeArquivo) {
         totalPalavras++;
         contador++;
     }
-     
+    
     fclose(arquivo);
-     
+
     return 1;
 }
 
-int jogar(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
-    
+int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
+
     srand(time(NULL));
     int indiceSorteado = rand() % contador;
     
@@ -241,10 +248,56 @@ int jogar(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
     strcpy(palavraSorteada, palavrasTemaAtual[indiceSorteado]);
     
     printf("Palavra sorteada: %s\n", palavraSorteada);
-    
-    
+
     return 0;
 }
+
+int jogar() {
+
+    const int maxPalavras = 6;
+    int tentativas = 0;
+    char tentativaAtual[TAMANHO_PALAVRAS];
+    char todasTentativas[maxPalavras][TAMANHO_PALAVRAS];
+    int contadorPreenchidas = 0;
+     int comparacao;
+
+    for(int i = 0; i < maxPalavras; i++) {
+        todasTentativas[i][0] = '\0';
+    }
+
+   
+    while ((comparacao = getchar()) != '\n' && comparacao != EOF);
+    while(vidasRestantes > 0 && vitoria == 0) {
+
+        coracoesVidas(vidasRestantes);
+
+        for (int i = 0; i < maxPalavras; i++) {
+            if (strlen(todasTentativas[i]) > 0) {
+                contadorPreenchidas++;
+                
+                for (int j = 0; j < strlen(todasTentativas[i]); j++) {
+                    todasTentativas[i][j] = toupper(todasTentativas[i][j]);
+                }
+            } 
+        }
+
+        for (int i = 0; i < contadorPreenchidas; i++) {
+            printf("\n               %s", todasTentativas[i]);
+        }
+
+        printf("\nTENTATIVA: %d/%d\n", contadorPreenchidas + 1, maxPalavras);
+        printf("Digite: ");
+        
+        fgets(tentativaAtual, sizeof(tentativaAtual), stdin);
+        
+        tentativaAtual[strcspn(tentativaAtual, "\n")] = 0;
+        
+        strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
+
+        vidasRestantes--;
+    }
+}
+
 
 /*=======
 #include <stdio.h>
@@ -457,8 +510,6 @@ int menuTema(){
     return op;
 }
 
-
-
 void jogarTermo(int tema){
 
     const char* palavraCorreta;
@@ -514,8 +565,6 @@ void jogarTermo(int tema){
     printf("\nPressione ENTER para voltar...");
     getchar();
 }
-
-
 
 void printLetter(char c){ //se precisar usar coloquei todas as letras
     case 'A':
