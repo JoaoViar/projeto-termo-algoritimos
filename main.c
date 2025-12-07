@@ -6,7 +6,7 @@
 #include <time.h>
 #include <ctype.h>
 
-#define TAMANHO_PALAVRAS 6
+#define TAMANHO_PALAVRAS 7
 #define MAXIMO_PALAVRAS 100
 int totalPalavras = 0;
 char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];
