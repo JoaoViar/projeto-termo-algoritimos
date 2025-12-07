@@ -6,13 +6,15 @@
 #include <time.h>
 #include <ctype.h>
 
-#define TAMANHO_PALAVRAS 7
+#define TAMANHO_PALAVRAS 6
 #define MAXIMO_PALAVRAS 100
 int totalPalavras = 0;
 char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];
 int vidasRestantes = 6;
 int contador = 0;
 int vitoria = 0;
+
+char palavraSorteada[TAMANHO_PALAVRAS];
 
 void painel();
 void boasVindas();
@@ -49,7 +51,9 @@ int main(){
             }else if(opcaoTema == 2){
                 carregarPalavras("temas/musicas.txt");
             }else if(opcaoTema == 3){
-                
+                carregarPalavras("temas/comidas.txt");
+                sorteio(palavras);
+                jogar();
             }else{
                 // opção não existe
             }
@@ -203,7 +207,7 @@ int menuTema(){
     printf("                                                  DIGITE O NÚMERO DA OPÇÃO DESEJADA:\n");
     printf("                                                           1- TEMA ANIMAIS\n");
     printf("                                                           2- TEMA MÚSICAS\n");
-    printf("                                                           3- TEMA 3 (NOME)\n");
+    printf("                                                           3- TEMA COMIDAS\n");
     printf("                                                    DIGITE O NÚMERO DA OPÇÃO DESEJADA: ");
     scanf("%d", &opcaoTema);
 
@@ -212,7 +216,7 @@ int menuTema(){
 
 int carregarPalavras(const char* nomeArquivo) {
 
-    FILE *arquivo = fopen("temas/animais.txt", "r");
+    FILE *arquivo = fopen(nomeArquivo, "r");
     
     if (arquivo == NULL) {
         printf("Erro: Arquivo não encontrado!\n");
@@ -244,7 +248,6 @@ int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
     srand(time(NULL));
     int indiceSorteado = rand() % contador;
     
-    char palavraSorteada[TAMANHO_PALAVRAS];
     strcpy(palavraSorteada, palavrasTemaAtual[indiceSorteado]);
     
     printf("Palavra sorteada: %s\n", palavraSorteada);
