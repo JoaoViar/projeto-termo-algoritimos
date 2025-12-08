@@ -2,15 +2,15 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <string.h> 
+#include <string.h>
 #include <time.h>
 #include <ctype.h>
 
 #define TAMANHO_PALAVRAS 7                            // Tamanho maxmo de palavras igual a 7 para ter margem de erro
 #define MAXIMO_PALAVRAS 100                           // Limitação de palavras por arquivo de tema
 int totalPalavras = 0;                                // Durante a leitura do arquivo txt o numero de palavras é contado, número necessario durante o projeto
-char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];     // 
-int vidasRestantes = 6;                               
+char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];     //
+int vidasRestantes = 6;
 int contador = 0;                                     //
 int vitoria = 0;                                      // Varaivel para identificar quando o jogador vence (Não é contador de vitórias)
 
@@ -22,6 +22,8 @@ int menuTema();                                       // Disponibiliza três tem
 int carregarPalavras(const char* nomeArquivo);
 int sorteio(char palavrasJogar[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]);        // Funcção responsavel por sortear a palavra dentro do arquivo txt
 int jogar();                                          // Função principal do jogo
+void tutorial();
+void sobre();
 
 int main(){
 
@@ -32,7 +34,7 @@ int main(){
 
     int opcaoInicial = 0;
     int opcaoTema = 0;
-    
+
     printf("\n\n\n");
     painel();
     printf("\n\n\n");
@@ -57,9 +59,9 @@ int main(){
             }
 
         }else if(opcaoInicial == 2){
-            printf("\nESCREVER O TUTORIAL\n");
+            tutorial();
         }else if(opcaoInicial == 3){
-            printf("\nESCREVER O SOBRE\n");
+            sobre();
         }else if(opcaoInicial == 4){
             printf("\nOBRIGADO POR JOGAR, JOGO ENCERRADO\n");
         }else{
@@ -76,7 +78,7 @@ int main(){
 void painel(){
 
     printf("\033[0;32m");
-    printf("          ||||||||||||||||       ||||||||||||||||    |||||||||||            |||||||        |||||||          ||||||||\n");   
+    printf("          ||||||||||||||||       ||||||||||||||||    |||||||||||            |||||||        |||||||          ||||||||\n");
     Sleep(100);
     printf("          ||||||||||||||||       ||||||||||||||||    |||||||||||||||        |||||||||    |||||||||        ||||   ||||\n");
     Sleep(100);
@@ -180,7 +182,7 @@ void coracoesVidas(int vidasRestantes){
         break;
     }
 }
-    
+
 int menuInicial(){
 
     int opcaoInicial = 0;
@@ -213,11 +215,11 @@ int menuTema(){
 }
 
 // Funcao que recebe o nome do arquivo dependendo do tema e copia as palavras do arquivo para uma matriz
-int carregarPalavras(const char* nomeArquivo) {   
+int carregarPalavras(const char* nomeArquivo) {
 
     // Leitura do arquivo
-    FILE *arquivo = fopen("temas/animais.txt", "r");   
-    
+    FILE *arquivo = fopen("temas/animais.txt", "r");
+
     // Identifica se o arquivo foi encontrado com sucesso
     if (arquivo == NULL) {
         printf("Erro: Arquivo não encontrado!\n");
@@ -227,17 +229,17 @@ int carregarPalavras(const char* nomeArquivo) {
     char linha[TAMANHO_PALAVRAS];
     totalPalavras = 0;
     contador = 0;
-    
+
     // while responsavel por armazenar as palavras do arquivo em um array char
     while (fgets(linha, sizeof(linha), arquivo) != NULL && totalPalavras < MAXIMO_PALAVRAS) {  // Roda enquanto o fgets não identificar uma linha nula ou enquanto o maximo de palavras não for atingido
-       
+
         linha[strcspn(linha, "\n")] = 0;      // Remove o sinalizador de fim de string '\n' por 0, ou seja, caracter nulo '\0'
-     
+
         strcpy(palavras[totalPalavras], linha);   // Atribui a palavra da linha a matriz palavras
         totalPalavras++;
         contador++;
     }
-    
+
     fclose(arquivo);       // Fecha o arquivo
 
     return 1;
@@ -249,7 +251,7 @@ int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
     // Sorteio de um número
     srand(time(NULL));
     int indiceSorteado = rand() % contador;
-    
+
     // Armazenar a palavra da posição do array que foi sorteada no vetor palavraSorteada
     char palavraSorteada[TAMANHO_PALAVRAS];
     strcpy(palavraSorteada, palavrasTemaAtual[indiceSorteado]);
@@ -273,9 +275,9 @@ int jogar() {
         todasTentativas[i][0] = '\0';
     }
 
-    // Essa linha precisou ser adicionada para esperar uma quebra de inhaquando o jogador precisar inserir uma palavra pois 
+    // Essa linha precisou ser adicionada para esperar uma quebra de inhaquando o jogador precisar inserir uma palavra pois
     // sem ela o próximo while rodava duas vezes seguidas sem deixaro jogador inseriri a palavra
-    while ((comparacao = getchar()) != '\n' && comparacao != EOF); 
+    while ((comparacao = getchar()) != '\n' && comparacao != EOF);
 
     while(vidasRestantes > 0 && vitoria == 0) {
 
@@ -292,7 +294,7 @@ int jogar() {
                 for (int j = 0; j < strlen(todasTentativas[i]); j++) {
                     todasTentativas[i][j] = toupper(todasTentativas[i][j]);
                 }
-            } 
+            }
         }
 
         // Printa as palvras chutadas pelo jogador
@@ -304,16 +306,47 @@ int jogar() {
         printf("                                                                     DIGITE: ");
         // Leitura da tentaiva atuais
         fgets(tentativaAtual, sizeof(tentativaAtual), stdin);
-        
+
         tentativaAtual[strcspn(tentativaAtual, "\n")] = 0;
-        
+
         // Insere a nova tentativa no array de todas as tenativas
         strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
 
-        
+
 
         vidasRestantes--;
     }
+}
+
+void tutorial(){
+     printf("---------------------------------------------------------------TUTORIAL----------------------------------------------------------------\n\n");
+    printf("COMO JOGAR:\n\n");
+    printf("Você tem 6 tentativas para adivinhar a palavra secreta\n");
+    printf("Cada tentativa deve ser uma palavra válida com 5 letras\n");
+    printf("Após cada tentativa, as cores das letras indicarão o quão perto você está:\n\n");
+    printf("VERDE   - A letra está na posição correta\n");
+    printf("AMARELO - A letra existe, mas em outra posição\n");
+    printf("CINZA   - A letra não existe na palavra\n\n");
+    printf("BOA SORTE E DIVIRTA-SE!\n\n");
+    printf("Pressione ENTER para voltar ao menu...");
+    getchar();
+}
+
+void sobre() {
+    printf("=====================================================\n");
+    printf("                       SOBRE\n");
+    printf("=====================================================\n\n");
+    printf("Projeto: Jogo TERMO\n");
+    printf("Disciplina: Algoritmos e Estrutura de Dados II\n");
+    printf("Linguagem: C\n\n");
+    printf("Funcionalidades do projeto:\n");
+    printf("- Sistema de vidas\n");
+    printf("- Leitura de palavras por arquivos TXT\n");
+    printf("- Temas diferentes\n");
+    printf("- Sistema de tentativas\n\n");
+    printf("Projeto desenvolvido para fins academicos.\n");
+    printf("\nPressione ENTER para voltar ao menu...");
+    getchar();
 }
 
 
@@ -860,3 +893,4 @@ void normalizar() { ); }
 int match() {  }
 >>>>>>> 16152120e5de26c1cfcdc68422848613f1184221
 */
+
