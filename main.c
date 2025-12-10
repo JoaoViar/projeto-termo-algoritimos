@@ -334,6 +334,7 @@ int jogar() {
         strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
         contadorPreenchidas++; 
 
+        printf("                                                               ");
         mostrarCores(tentativaAtual, palavraSorteada);
 
         if (strcmp(tentativaAtual, palavraSorteada) == 0) {
