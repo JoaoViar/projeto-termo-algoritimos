@@ -8,11 +8,16 @@
 
 #define TAMANHO_PALAVRAS 7                            // Tamanho maxmo de palavras igual a 7 para ter margem de erro
 #define MAXIMO_PALAVRAS 100                           // Limitação de palavras por arquivo de tema
+#define COR_VERDE "\033[1;32m"
+#define COR_AMARELO "\033[1;33m"
+#define COR_CINZA "\033[1;90m"
+#define COR_RESET "\033[0m"
 int totalPalavras = 0;                                // Durante a leitura do arquivo txt o numero de palavras é contado, número necessario durante o projeto
 char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];     //
-int vidasRestantes = 6;
+int vidasRestantes;
 int contador = 0;                                     //
-int vitoria = 0;                                      // Varaivel para identificar quando o jogador vence (Não é contador de vitórias)
+int vitoria;                                          // Varaivel para identificar quando o jogador vence (Não é contador de vitórias)
+char palavraSorteada[TAMANHO_PALAVRAS];
 
 void painel();                                        // Imprime o TERMO em Ascii text art
 void boasVindas();                                    // Imprime boas vindas em Asci text art
@@ -52,8 +57,12 @@ int main(){
                 jogar();
             }else if(opcaoTema == 2){
                 carregarPalavras("temas/musicas.txt");
+                sorteio(palavras);
+                jogar();
             }else if(opcaoTema == 3){
                 carregarPalavras("temas/comidas.txt");
+                sorteio(palavras);
+                jogar();
             }else{
                 printf("Opção não existe!");
             }
@@ -253,16 +262,30 @@ int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
     int indiceSorteado = rand() % contador;
 
     // Armazenar a palavra da posição do array que foi sorteada no vetor palavraSorteada
-    char palavraSorteada[TAMANHO_PALAVRAS];
     strcpy(palavraSorteada, palavrasTemaAtual[indiceSorteado]);
 
     return 0;
 }
 
+// Função que compara e mostra as cores
+void mostrarCores(char tentativa[], char correta[]) {
+    for (int i = 0; i < strlen(tentativa); i++) {
+        if (tentativa[i] == correta[i]) {
+            printf(COR_VERDE "%c" COR_RESET, tentativa[i]);
+        } else if (strchr(correta, tentativa[i]) != NULL) {
+            printf(COR_AMARELO "%c" COR_RESET, tentativa[i]);
+        } else {
+            printf(COR_CINZA "%c" COR_RESET, tentativa[i]);
+        }
+    }
+    printf("\n");
+}
 
 // FUnção principal para o jogo
 int jogar() {
 
+    vidasRestantes = 6;
+    vitoria = 0;
     const int maxPalavras = 6;
     int tentativas = 0;
     char tentativaAtual[TAMANHO_PALAVRAS];
@@ -288,8 +311,6 @@ int jogar() {
         for (int i = 0; i < maxPalavras; i++) {
             // Se o jogador ja deu algum palpite
             if (strlen(todasTentativas[i]) > 0) {
-                // contador de palavras chutadas pelo jogador
-                contadorPreenchidas++;
                 //Transforma as palvras chutadas pelo jogador em MAIUSCULAS
                 for (int j = 0; j < strlen(todasTentativas[i]); j++) {
                     todasTentativas[i][j] = toupper(todasTentativas[i][j]);
@@ -311,8 +332,15 @@ int jogar() {
 
         // Insere a nova tentativa no array de todas as tenativas
         strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
+        contadorPreenchidas++; 
 
+        mostrarCores(tentativaAtual, palavraSorteada);
 
+        if (strcmp(tentativaAtual, palavraSorteada) == 0) {
+            vitoria = 1;
+            printf("\nParabéns! Você acertou a palavra!\n");
+            break;
+        }
 
         vidasRestantes--;
     }
