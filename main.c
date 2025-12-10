@@ -334,17 +334,22 @@ int jogar() {
         strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
         contadorPreenchidas++; 
 
-        printf("                                                               ");
+        printf("                                                                       ");
         mostrarCores(tentativaAtual, palavraSorteada);
 
         if (strcmp(tentativaAtual, palavraSorteada) == 0) {
             vitoria = 1;
-            printf("\nParabéns! Você acertou a palavra!\n");
+            printf("\n                                                               Parabéns! Você acertou a palavra!\n");
             break;
         }
-
+        
         vidasRestantes--;
     }
+        if (vitoria == 0) {
+            printf("\n                                                               Você perdeu!\n");
+            printf("                                                           A palavra correta era %s\n", palavraSorteada);
+            coracoesVidas(0);
+        }
 }
 
 void tutorial(){
