@@ -8,9 +8,11 @@
 
 #define TAMANHO_PALAVRAS 7                            // Tamanho maxmo de palavras igual a 7 para ter margem de erro
 #define MAXIMO_PALAVRAS 100                           // Limitação de palavras por arquivo de tema
+#define TAMANHO_CORRETO 5                             // Tamanho correto das palavras
 #define COR_VERDE "\033[1;32m"
 #define COR_AMARELO "\033[1;33m"
 #define COR_CINZA "\033[1;90m"
+#define COR_VERMELHO "\033[1;31m"                     //  Cor para mensagens de erro
 #define COR_RESET "\033[0m"
 int totalPalavras = 0;                                // Durante a leitura do arquivo txt o numero de palavras é contado, número necessario durante o projeto
 char palavras[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS];     //
@@ -288,30 +290,30 @@ int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
 }
 
 void mostrarCores(char tentativa[], char correta[]) {
-    int usado[5] = {0}; 
-    
+    int usado[5] = {0};
+
     for(int i = 0; i < 5; i++) {
         if(tentativa[i] == correta[i]) {
-            usado[i] = 1;  
+            usado[i] = 1;
         }
     }
-    
+
     for(int i = 0; i < 5; i++) {
         if(tentativa[i] == correta[i]) {
             printf(COR_VERDE "[%c]" COR_RESET, tentativa[i]);
         } else {
             int achou = 0;
-            
+
 
             for(int j = 0; j < 5; j++) {
                 if(!usado[j] && tentativa[i] == correta[j]) {
                     printf(COR_AMARELO "[%c]" COR_RESET, tentativa[i]);
-                    usado[j] = 1; 
+                    usado[j] = 1;
                     achou = 1;
                     break;
                 }
             }
-            
+
             if(!achou) {
                 printf(COR_CINZA "[%c]" COR_RESET, tentativa[i]);
             }
@@ -324,11 +326,11 @@ void mostrarCores(char tentativa[], char correta[]) {
 char* removerTodosAcentos(char *palavra) {
     int i, j;
     char resultado[TAMANHO_PALAVRAS];  // Buffer temporário
-    
+
     j = 0;
     for(i = 0; palavra[i] != '\0' && j < TAMANHO_PALAVRAS - 1; i++) {
         unsigned char c = palavra[i];
-        
+
         // Se for caractere ASCII normal (0-127)
         if(c < 128) {
             // Converte para maiúsculo
@@ -343,7 +345,7 @@ char* removerTodosAcentos(char *palavra) {
         else if(c >= 0xC0 && c <= 0xDF) {
             // É um caractere acentuado em UTF-8
             unsigned char next = palavra[i+1];
-            
+
             // Mapeia para letra sem acento
             if((c == 0xC3 && next >= 0x80 && next <= 0x85) ||  (c == 0xC3 && next >= 0xA0 && next <= 0xA5)) {  //  ÀÁÂÃÄ àáâãä
                 resultado[j] = 'A';
@@ -369,13 +371,13 @@ char* removerTodosAcentos(char *palavra) {
                 resultado[j] = 'U';
                 j++;
             }
-            
+
             // Pula o próximo byte (já processamos os 2 bytes)
             i++;
         }
-        
+
     }
-    
+
     resultado[j] = '\0';
     strcpy(palavra, resultado);
     return palavra;
@@ -407,7 +409,7 @@ int jogar() {
         printf("\033[0;31m");
         coracoesVidas(vidasRestantes);
 
-        
+
         for (int i = 0; i < maxPalavras; i++) {
             // Se o jogador ja deu algum palpite
             if (strlen(todasTentativas[i]) > 0) {
@@ -438,9 +440,19 @@ int jogar() {
 
         removerTodosAcentos(tentativaAtual);
 
+        //  VALIDAÇÃO DO TAMANHO DA PALAVRA
+        int tamanho = strlen(tentativaAtual);
+
+        if (tamanho != TAMANHO_CORRETO) {
+            printf(COR_VERMELHO "\n                                              ERRO: A palavra deve ter exatamente 5 letras!\n" COR_RESET);
+            printf(COR_VERMELHO "                                              Você digitou %d letra(s). Tente novamente.\n\n" COR_RESET, tamanho);
+            continue;  // Volta para o início do loop sem perder vida
+        }
+
+
         // Insere a nova tentativa no array de todas as tenativas
         strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
-        contadorPreenchidas++; 
+        contadorPreenchidas++;
 
         printf("\n                                                          ");
         mostrarCores(tentativaAtual, palavraSorteada);
@@ -451,7 +463,7 @@ int jogar() {
             printf("\n                                                    Parabéns! Você acertou a palavra!\n");
             break;
         }
-        
+
         vidasRestantes--;
     }
         if (vitoria == 0) {
@@ -464,11 +476,11 @@ int jogar() {
 
 void tutorial(){
      while (getchar() != '\n');
-    
+
      printf("---------------------------------------------------------------TUTORIAL----------------------------------------------------------------\n\n");
     printf("COMO JOGAR:\n\n");
     printf("Você tem 6 tentativas para adivinhar a palavra secreta\n");
-    printf("Cada tentativa deve ser uma palavra válida com 5 letras\n");
+    printf("Cada tentativa deve ser uma palavra válida com EXATAMENTE 5 letras\n");
     printf("Após cada tentativa, as cores das letras indicarão o quão perto você está:\n\n");
     printf("VERDE   - A letra está na posição correta\n");
     printf("AMARELO - A letra existe, mas em outra posição\n");
@@ -480,7 +492,7 @@ void tutorial(){
 
 void sobre() {
      while (getchar() != '\n');
-    
+
     printf("=====================================================\n");
     printf("                       SOBRE\n");
     printf("=====================================================\n\n");
