@@ -79,9 +79,6 @@ int main(){
         }
     }while(opcaoInicial != 4);
 
-    printf("\033[0;31m");
-    printf("\n\n\n");
-    coracoesVidas(5);
 
 }
 
@@ -111,6 +108,8 @@ void painel(){
 }
 
 void boasVindas(){
+
+    printf("\033[0;32m");
 
     printf("     |||||||     ||||||||   |||||    |||||             |||          |||     ||||     ||||||      |||    ||||||              |||         \n");
     Sleep(100);
@@ -211,6 +210,8 @@ int menuInicial(){
 
     int opcaoInicial = 0;
 
+    printf("\033[0;32m");
+
     printf("\n\n------------------------------------------------------------- MENU TERMO ------------------------------------------------------------\n\n");
     printf("                                                   ESSAS SÃO AS OPÇÕES DISPONIVEIS:\n");
     printf("                                                              1- JOGAR\n");
@@ -226,6 +227,8 @@ int menuInicial(){
 int menuTema(){
 
     int opcaoTema = 0;
+
+    printf("\033[0;32m");
 
     printf("------------------------------------------------------------ MENU DE TEMAS ------------------------------------------------------------\n\n");
     printf("                                                  DIGITE O NÚMERO DA OPÇÃO DESEJADA:\n");
@@ -401,9 +404,10 @@ int jogar() {
     while(vidasRestantes > 0 && vitoria == 0) {
 
         // Antes de cada tentativa os corações da vida do jogador são printados
+        printf("\033[0;31m");
         coracoesVidas(vidasRestantes);
 
-
+        
         for (int i = 0; i < maxPalavras; i++) {
             // Se o jogador ja deu algum palpite
             if (strlen(todasTentativas[i]) > 0) {
@@ -420,9 +424,11 @@ int jogar() {
             mostrarCores(todasTentativas[i], palavraSorteada);
         }
 
+        printf("\033[0;32m");
         printf("\n                                                  Precione ENTER para continuar!");
         while (getchar() != '\n');
 
+        printf("\033[0;32m");
         printf("\n                                                            TENTATIVA: %d/%d\n", contadorPreenchidas + 1, maxPalavras);
         printf("                                                            DIGITE: ");
         // Leitura da tentaiva atuais
@@ -441,6 +447,7 @@ int jogar() {
 
         if (strcmp(tentativaAtual, palavraSorteada) == 0) {
             vitoria = 1;
+            printf("\033[0;32m");
             printf("\n                                                    Parabéns! Você acertou a palavra!\n");
             break;
         }
@@ -448,6 +455,7 @@ int jogar() {
         vidasRestantes--;
     }
         if (vitoria == 0) {
+            printf("\033[0;31m");
             printf("\n                                                           Você perdeu!\n");
             printf("                                                      A palavra correta era %s\n", palavraSorteada);
             coracoesVidas(0);
