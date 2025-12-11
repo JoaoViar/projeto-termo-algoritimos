@@ -368,6 +368,8 @@ int jogar() {
 }
 
 void tutorial(){
+     while (getchar() != '\n');
+    
      printf("---------------------------------------------------------------TUTORIAL----------------------------------------------------------------\n\n");
     printf("COMO JOGAR:\n\n");
     printf("Você tem 6 tentativas para adivinhar a palavra secreta\n");
@@ -377,11 +379,13 @@ void tutorial(){
     printf("AMARELO - A letra existe, mas em outra posição\n");
     printf("CINZA   - A letra não existe na palavra\n\n");
     printf("BOA SORTE E DIVIRTA-SE!\n\n");
-    printf("Pressione ENTER para voltar ao menu...");
+    printf("Pressione ENTER para voltar ao menu...\n");
     getchar();
 }
 
 void sobre() {
+     while (getchar() != '\n');
+    
     printf("=====================================================\n");
     printf("                       SOBRE\n");
     printf("=====================================================\n\n");
@@ -394,7 +398,7 @@ void sobre() {
     printf("- Temas diferentes\n");
     printf("- Sistema de tentativas\n\n");
     printf("Projeto desenvolvido para fins academicos.\n");
-    printf("\nPressione ENTER para voltar ao menu...");
+    printf("\nPressione ENTER para voltar ao menu...\n");
     getchar();
 }
 
