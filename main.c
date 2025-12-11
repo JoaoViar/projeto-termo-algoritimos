@@ -285,13 +285,33 @@ int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
 }
 
 void mostrarCores(char tentativa[], char correta[]) {
-    for (int i = 0; i < strlen(tentativa); i++) {
-        if (tentativa[i] == correta[i]) {
-            printf(COR_VERDE "%c" COR_RESET, tentativa[i]);
-        } else if (strchr(correta, tentativa[i]) != NULL) {
-            printf(COR_AMARELO "%c" COR_RESET, tentativa[i]);
+    int usado[5] = {0}; 
+    
+    for(int i = 0; i < 5; i++) {
+        if(tentativa[i] == correta[i]) {
+            usado[i] = 1;  
+        }
+    }
+    
+    for(int i = 0; i < 5; i++) {
+        if(tentativa[i] == correta[i]) {
+            printf(COR_VERDE "[%c]" COR_RESET, tentativa[i]);
         } else {
-            printf(COR_CINZA "%c" COR_RESET, tentativa[i]);
+            int achou = 0;
+            
+
+            for(int j = 0; j < 5; j++) {
+                if(!usado[j] && tentativa[i] == correta[j]) {
+                    printf(COR_AMARELO "[%c]" COR_RESET, tentativa[i]);
+                    usado[j] = 1; 
+                    achou = 1;
+                    break;
+                }
+            }
+            
+            if(!achou) {
+                printf(COR_CINZA "[%c]" COR_RESET, tentativa[i]);
+            }
         }
     }
     printf("\n");
@@ -350,7 +370,7 @@ char* removerTodosAcentos(char *palavra) {
             // Pula o próximo byte (já processamos os 2 bytes)
             i++;
         }
-        // Ignora outros bytes (mantém como está ou remove)
+        
     }
     
     resultado[j] = '\0';
