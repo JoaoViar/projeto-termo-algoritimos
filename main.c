@@ -7,7 +7,7 @@
 #include <ctype.h>
 
 #define TAMANHO_PALAVRAS 7                            // Tamanho maxmo de palavras igual a 7 para ter margem de erro
-#define MAXIMO_PALAVRAS 100                           // Limitação de palavras por arquivo de tema
+#define MAXIMO_PALAVRAS 50                           // Limitação de palavras por arquivo de tema
 #define TAMANHO_CORRETO 5                             // Tamanho correto das palavras
 #define COR_VERDE "\033[1;32m"
 #define COR_AMARELO "\033[1;33m"
@@ -285,7 +285,6 @@ int sorteio(char palavrasTemaAtual[MAXIMO_PALAVRAS][TAMANHO_PALAVRAS]) {
 
     // Armazenar a palavra da posição do array que foi sorteada no vetor palavraSorteada
     strcpy(palavraSorteada, palavrasTemaAtual[indiceSorteado]);
-
     return 0;
 }
 
@@ -475,6 +474,7 @@ int jogar() {
 }
 
 void tutorial(){
+     while (getchar() != '\n');
 
      printf("---------------------------------------------------------------TUTORIAL----------------------------------------------------------------\n\n");
     printf("COMO JOGAR:\n\n");
@@ -490,6 +490,7 @@ void tutorial(){
 }
 
 void sobre() {
+     while (getchar() != '\n');
 
     printf("=====================================================\n");
     printf("                       SOBRE\n");
