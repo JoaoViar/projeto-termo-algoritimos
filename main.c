@@ -475,7 +475,6 @@ int jogar() {
 }
 
 void tutorial(){
-     while (getchar() != '\n');
 
      printf("---------------------------------------------------------------TUTORIAL----------------------------------------------------------------\n\n");
     printf("COMO JOGAR:\n\n");
@@ -491,7 +490,6 @@ void tutorial(){
 }
 
 void sobre() {
-     while (getchar() != '\n');
 
     printf("=====================================================\n");
     printf("                       SOBRE\n");
