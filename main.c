@@ -132,60 +132,74 @@ void coracoesVidas(int vidasRestantes){
     switch (vidasRestantes)
     {
     case 0:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||\n");
         printf("              ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||\n");
         printf("                ||       ||       ||       ||       ||       ||       ||       ||       ||       ||       ||       ||\n");
         printf("                  ||   ||           ||   ||           ||   ||           ||   ||           ||   ||           ||   ||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     case 1:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               |||||| ||||||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||\n");
         printf("              |||||||||||||||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||\n");
         printf("                |||||||||||       ||       ||       ||       ||       ||       ||       ||       ||       ||       ||\n");
         printf("                  |||||||           ||   ||           ||   ||           ||   ||           ||   ||           ||   ||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     case 2:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               |||||| ||||||     |||||| ||||||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||\n");
         printf("              |||||||||||||||   |||||||||||||||   ||     |     ||   ||     |     ||   ||     |     ||   ||     |     ||\n");
         printf("                |||||||||||       |||||||||||       ||       ||       ||       ||       ||       ||       ||       ||\n");
         printf("                  |||||||           |||||||           ||   ||           ||   ||           ||   ||           ||   ||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     case 3:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               |||||| ||||||     |||||| ||||||     |||||| ||||||     ||  || ||  ||     ||  || ||  ||     ||  || ||  ||\n");
         printf("              |||||||||||||||   |||||||||||||||   |||||||||||||||   ||     |     ||   ||     |     ||   ||     |     ||\n");
         printf("                |||||||||||       |||||||||||       |||||||||||       ||       ||       ||       ||       ||       ||\n");
         printf("                  |||||||           |||||||           |||||||           ||   ||           ||   ||           ||   ||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     case 4:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               |||||| ||||||     |||||| ||||||     |||||| ||||||     |||||| ||||||     ||  || ||  ||     ||  || ||  ||\n");
         printf("              |||||||||||||||   |||||||||||||||   |||||||||||||||   |||||||||||||||   ||     |     ||   ||     |     ||\n");
         printf("                |||||||||||       |||||||||||       |||||||||||       |||||||||||       ||       ||       ||       ||\n");
         printf("                  |||||||           |||||||           |||||||           |||||||           ||   ||           ||   ||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     case 5:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               |||||| ||||||     |||||| ||||||     |||||| ||||||     |||||| ||||||     |||||| ||||||     ||  || ||  ||\n");
         printf("              |||||||||||||||   |||||||||||||||   |||||||||||||||   |||||||||||||||   |||||||||||||||   ||     |     ||\n");
         printf("                |||||||||||       |||||||||||       |||||||||||       |||||||||||       |||||||||||       ||       ||\n");
         printf("                  |||||||           |||||||           |||||||           |||||||           |||||||           ||   ||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     case 6:
+        printf("\n");
         printf("                ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||       ||||   ||||\n");
         printf("               |||||| ||||||     |||||| ||||||     |||||| ||||||     |||||| ||||||     |||||| ||||||     |||||| ||||||\n");
         printf("              |||||||||||||||   |||||||||||||||   |||||||||||||||   |||||||||||||||   |||||||||||||||   |||||||||||||||\n");
         printf("                |||||||||||       |||||||||||       |||||||||||       |||||||||||       |||||||||||       |||||||||||\n");
         printf("                  |||||||           |||||||           |||||||           |||||||           |||||||           |||||||\n");
         printf("                    |||               |||               |||               |||               |||               |||\n");
+        printf("\n");
         break;
     default:
         break;
@@ -320,13 +334,11 @@ int jogar() {
 
         // Printa as palvras chutadas pelo jogador
         for (int i = 0; i < contadorPreenchidas; i++) {
-            
-            printf("\n                                                              ");
+            printf("\n                                                                 ");
             mostrarCores(todasTentativas[i], palavraSorteada);
-            
         }
 
-        printf("\n                                                          TENTATIVA: %d/%d\n", contadorPreenchidas + 1, maxPalavras);
+        printf("\n                                                            TENTATIVA: %d/%d\n", contadorPreenchidas + 1, maxPalavras);
         printf("                                                            DIGITE: ");
         // Leitura da tentaiva atuais
         fgets(tentativaAtual, sizeof(tentativaAtual), stdin);
@@ -337,12 +349,12 @@ int jogar() {
         strcpy(todasTentativas[contadorPreenchidas], tentativaAtual);
         contadorPreenchidas++; 
 
-        printf("                                                              ");
+        printf("                                                                 ");
         mostrarCores(tentativaAtual, palavraSorteada);
 
         if (strcmp(tentativaAtual, palavraSorteada) == 0) {
             vitoria = 1;
-            printf("\n                                                      Parabéns! Você acertou a palavra!\n");
+            printf("\n                                                    Parabéns! Você acertou a palavra!\n");
             break;
         }
         
