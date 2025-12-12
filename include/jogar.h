@@ -8,5 +8,6 @@
 #define TAMANHO_CORRETO 5 
 
 int jogar();
+void reinicializarJogo();
 
 #endif

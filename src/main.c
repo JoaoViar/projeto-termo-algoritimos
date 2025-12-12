@@ -32,14 +32,17 @@ int main(){
             opcaoTema = menuTema();
 
             if(opcaoTema == 1){
+                reinicializarJogo();
                 carregarPalavras("src/temas/animais.txt");
                 sorteio(palavras);
                 jogar();
             }else if(opcaoTema == 2){
+                reinicializarJogo();
                 carregarPalavras("src/temas/musicas.txt");
                 sorteio(palavras);
                 jogar();
             }else if(opcaoTema == 3){
+                reinicializarJogo();
                 carregarPalavras("src/temas/comidas.txt");
                 sorteio(palavras);
                 jogar();

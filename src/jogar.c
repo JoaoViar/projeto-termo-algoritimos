@@ -7,6 +7,8 @@
  
 int jogar() {
 
+    
+
     const int maxPalavras = 6;
     char tentativaAtual[TAMANHO_PALAVRAS];
     char todasTentativas[maxPalavras][TAMANHO_PALAVRAS];     // Variavel responsável por armazenar todas as palvars tentadas pelo jogador
@@ -17,8 +19,6 @@ int jogar() {
         todasTentativas[i][0] = '\0';
     }
 
-    // Essa linha precisou ser adicionada para esperar uma quebra de inhaquando o jogador precisar inserir uma palavra pois
-    // sem ela o próximo while rodava duas vezes seguidas sem deixaro jogador inseriri a palavra
 
     while(vidasRestantes > 0 && vitoria == 0) {
 
@@ -90,4 +90,20 @@ int jogar() {
             coracoesVidas(0);
         }
     return vitoria;
+}
+
+//Antes de cada rodada é necessario reinicializar as variaveis, senão o jogo não permite digitar nasproximas fases (após a primiera fase)
+void reinicializarJogo() {
+
+    vidasRestantes = 6;
+    vitoria = 0;
+    
+    palavraSorteada[0] = '\0';
+    
+
+    for(int i = 0; i < totalPalavras; i++) {
+         palavras[i][0] = '\0';
+    }
+    totalPalavras = 0;
+    contador = 0;
 }
